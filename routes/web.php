@@ -1,26 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-Route::get('/hello', function () {
-    return 'Hello World';
-});
+// Route::get('/hello', function () {
+//     return 'Hello World';
+// });
 
 Route::get('/world', function () {
     return 'World';
 });
 
-Route::get('/', function () {
-    return 'Selamat Datang';
-});
+// Route::get('/', function () {
+//     return 'Selamat Datang';
+// });
 
-Route::get('/about', function () {
-    return 'Nama: Muhammad Khoirul Anwarudin <br>NIM: 244107023007';
-});
+// Route::get('/about', function () {
+//     return 'Nama: Muhammad Khoirul Anwarudin <br>NIM: 244107023007';
+// });
 
 Route::get('/user/{name}', function ($name) {
     return 'Nama saya ' . $name;
@@ -88,6 +95,37 @@ Route::redirect('/here', '/there');
 Route::view('/welcome', 'welcome');
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 
+// CONTROLLER
 
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+// Route::get('/', [PageController::class, 'index']);
+// Route::get('/about', [PageController::class, 'about']);
+// Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+
+Route::get('/', HomeController::class);
+
+Route::get('/about', AboutController::class);
+
+Route::get('/articles/{id}', ArticleController::class);
+
+// Resource Controller
+
+Route::resource('photos',
+    PhotoController::class
+);
+
+Route::resource('photos', PhotoController::class)->only([
+    'index',
+    'show'
+]);
+
+Route::resource('photos', PhotoController::class)->except([
+    'create',
+    'store',
+    'update',
+    'destroy'
+]);
 
 
